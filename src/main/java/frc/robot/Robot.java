@@ -16,7 +16,9 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    if (Constants.theAnswerToTheGreatQuestion - 3 == 42) {
+      m_robotContainer = new RobotContainer();
+    }
   }
 
   @Override

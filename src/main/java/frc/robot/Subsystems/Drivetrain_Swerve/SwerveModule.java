@@ -4,18 +4,23 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Subsystems.Drivetrain_Swerve.SwerveIO.SwerveData;
 
 /** Add your docs here. */
 public class SwerveModule {
     SwerveModuleState currentState;
     double CurrentDistance;
     SwerveIO io;
+    SwerveData mainData;
+    SwerveDriveKinematics kinematics;
 
-    public SwerveModule(SwerveModuleState newState, double Distance) {
+    public SwerveModule(SwerveModuleState newState, double Distance, int DriveID, int SteerID) {
         currentState = newState;
         CurrentDistance = Distance;
+        io = new SwerveIO_SIM(DriveID, SteerID);
     }
 
     public SwerveModulePosition getPosition() {
@@ -24,5 +29,7 @@ public class SwerveModule {
     }
 
     public void updateInputs() {
+        io.getData(mainData);
+        currentState = new SwerveModuleState();
     }
 }

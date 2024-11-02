@@ -10,6 +10,8 @@ public interface SwerveIO {
         double DriveOutput;
         double SteerOutout;
 
+        double DriveVelocity;
+
         double DrivePosition;
         double SteerPosition;
     }

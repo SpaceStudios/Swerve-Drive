@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import java.lang.invoke.ConstantCallSite;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -12,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Drivetrain_Swerve extends SubsystemBase {
 
@@ -31,10 +34,10 @@ public class Drivetrain_Swerve extends SubsystemBase {
     positions = new SwerveModulePosition[] {new SwerveModulePosition()};
     kinematics = new SwerveDriveKinematics(module1Pos, module2Pos, module3Pos, module4Pos);
     SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
-    frontLeft = new SwerveModule(moduleStates[0], 0);
-    frontRight = new SwerveModule(moduleStates[1], 0);
-    rearLeft = new SwerveModule(moduleStates[2], 0);
-    rearRight = new SwerveModule(moduleStates[3], 0);
+    frontLeft = new SwerveModule(moduleStates[0], 0, Constants.DriveFLeft, Constants.SteerFLeft);
+    frontRight = new SwerveModule(moduleStates[1], 0, Constants.DriveFRight, Constants.SteerFRight);
+    rearLeft = new SwerveModule(moduleStates[2], 0, Constants.DriveRLeft, Constants.SteerRLeft);
+    rearRight = new SwerveModule(moduleStates[3], 0, Constants.DriveRRight, Constants.SteerRRight);
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
 
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
@@ -43,5 +46,7 @@ public class Drivetrain_Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
+    odometry.update(null, positions);
   }
 }
