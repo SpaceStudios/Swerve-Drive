@@ -4,10 +4,22 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import org.opencv.calib3d.StereoBM;
+
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
+import frc.robot.Constants;
+import frc.robot.Subsystems.Drivetrain_Swerve.Commands.Drive;
 
 /** Add your docs here. */
 public class SwerveIO_SIM implements SwerveIO {
@@ -21,27 +33,51 @@ public class SwerveIO_SIM implements SwerveIO {
         DriveMotor = new TalonFX(DriveID);
         SteerMotor = new TalonFX(SteerID);
 
-        var DriveSimState = DriveMotor.getSimState();
+        TalonFXSimState DriveSimState = DriveMotor.getSimState();
         DriveSimState.setSupplyVoltage(RoboRioSim.getVInVoltage());
-        var SteerSimState = SteerMotor.getSimState();
+
+        // Drive PIDs
+        var DrivePIDConfig = new Slot0Configs();
+        DrivePIDConfig.kP = Constants.kPDrive;
+        DrivePIDConfig.kI = Constants.kIDrive;
+        DrivePIDConfig.kD = Constants.KDDrive;
+
+        //Steer PIDs
+        var SteerPIDConfig = new Slot0Configs();
+        SteerPIDConfig.kP = Constants.kPSteer;
+        SteerPIDConfig.kI = Constants.kISteer;
+        SteerPIDConfig.kD = Constants.KDSteer;
+
+        DriveMotor.getConfigurator().apply(DrivePIDConfig);
+        SteerMotor.getConfigurator().apply(SteerPIDConfig);
+
+        TalonFXSimState SteerSimState = SteerMotor.getSimState();
         SteerSimState.setSupplyVoltage(RoboRioSim.getVInVoltage());
     }
 
     @Override
     public void setDriveVolts(double volts) {
-        // TODO Auto-generated method stub
-        
+        DriveMotor.setControl(new VelocityVoltage(volts));
     }
 
     @Override
     public void setSteerAngle(double angle) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSteerAngle'");
+        SteerMotor.setControl(new PositionVoltage(angle/(Math.PI*2.0)));
     }
 
     @Override
     public void getData(SwerveData data) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getData'");
+    }
+
+    @Override
+    public double getDistance() {
+        return DriveMotor.getPosition().getValueAsDouble();
+    }
+
+    @Override
+    public Rotation2d getRotation() {
+        return Rotation2d.fromRotations(SteerMotor.getPosition().getValueAsDouble());
     }
 }

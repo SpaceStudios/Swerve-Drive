@@ -5,24 +5,25 @@
 package frc.robot.Subsystems.Drivetrain_Swerve.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Subsystems.Drivetrain_Swerve.Drivetrain;
 
 public class Drive extends Command {
   /** Creates a new Drive. */
   double inputX;
   double inputY;
-  public Drive(double Axis_InputX, double Axis_InputY) {
+  Drivetrain drivetrain;
+  public Drive(double Axis_InputX, double Axis_InputY, Drivetrain newDrivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     inputX = Axis_InputX;
     inputY = Axis_InputY;
+    drivetrain = newDrivetrain;
   }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drivetrain.driveSwerve(inputX, inputY);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

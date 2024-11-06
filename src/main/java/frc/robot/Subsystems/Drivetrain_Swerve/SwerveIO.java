@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /** Add your docs here. */
 public interface SwerveIO {
     public class SwerveData {
@@ -17,5 +19,7 @@ public interface SwerveIO {
     }
     public abstract void setDriveVolts(double volts);
     public abstract void setSteerAngle(double angle);
+    public abstract double getDistance();
+    public abstract Rotation2d getRotation();
     public abstract void getData(SwerveData data);
 }

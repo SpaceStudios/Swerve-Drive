@@ -4,9 +4,11 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Subsystems.Drivetrain_Swerve.SwerveIO.SwerveData;
 
 /** Add your docs here. */
@@ -24,8 +26,24 @@ public class SwerveModule {
     }
 
     public SwerveModulePosition getPosition() {
-        SwerveModulePosition newPos = new SwerveModulePosition(CurrentDistance,currentState.angle);
+        SwerveModulePosition newPos = new SwerveModulePosition(getDriveDistance(),getRotation());
         return newPos;
+    }
+
+    public void setDriveVolts(double volts) {
+        io.setDriveVolts(volts);
+    }
+
+    public void setSteerAngle(double angleRad) {
+        io.setSteerAngle(angleRad);
+    }
+
+    public double getDriveDistance() {
+        return io.getDistance();
+    }
+
+    public Rotation2d getRotation() {
+        return io.getRotation();
     }
 
     public void updateInputs() {

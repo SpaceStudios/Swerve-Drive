@@ -5,6 +5,11 @@
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
 import java.lang.invoke.ConstantCallSite;
+import java.util.Currency;
+import java.util.function.DoubleSupplier;
+
+import org.littletonrobotics.junction.Logger;
+import org.opencv.dnn.Model;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,10 +18,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Drivetrain_Swerve extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {
 
   SwerveDriveOdometry odometry;
   SwerveDriveKinematics kinematics;
@@ -29,7 +37,7 @@ public class Drivetrain_Swerve extends SubsystemBase {
   SwerveModule rearRight;
 
   /** Creates a new Drivetrain_Swerve. */
-  public Drivetrain_Swerve(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
+  public Drivetrain(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
     speeds = new ChassisSpeeds();
     positions = new SwerveModulePosition[] {new SwerveModulePosition()};
     kinematics = new SwerveDriveKinematics(module1Pos, module2Pos, module3Pos, module4Pos);
@@ -43,10 +51,40 @@ public class Drivetrain_Swerve extends SubsystemBase {
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
   }
 
+  public void driveSwerve(double JoystickX, double JoystickY) {
+    var turnAngle = JoystickX*Constants.speedRadians;
+    var moveSpeed = JoystickY*Constants.robotSpeedRPS;
+
+    frontLeft.setSteerAngle(turnAngle);
+    frontLeft.setDriveVolts(moveSpeed);
+    frontRight.setSteerAngle(turnAngle);
+    frontRight.setSteerAngle(moveSpeed);
+    rearLeft.setSteerAngle(turnAngle);
+    rearLeft.setDriveVolts(moveSpeed);
+    rearRight.setSteerAngle(turnAngle);
+    rearRight.setDriveVolts(moveSpeed);
+  }
+
+  public Command driveCommand(DoubleSupplier left, DoubleSupplier right) {
+    return new RunCommand(() -> this.driveSwerve(left.getAsDouble(), right.getAsDouble()),this);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
-    odometry.update(null, positions);
+    odometry.update(Rotation2d.fromRadians(0), positions);
+    Logger.recordOutput("Odometry", odometry.getPoseMeters());
+
+    SwerveModuleState frontLeftState = new SwerveModuleState(frontLeft.getDriveDistance(), frontLeft.getRotation());
+    SwerveModuleState frontRightState = new SwerveModuleState(frontRight.getDriveDistance(), frontRight.getRotation());
+    SwerveModuleState rearLeftState = new SwerveModuleState(rearLeft.getDriveDistance(), rearLeft.getRotation());
+    SwerveModuleState rearRightState = new SwerveModuleState(rearRight.getDriveDistance(), rearRight.getRotation());
+
+    ChassisSpeeds currentSpeeds = kinematics.toChassisSpeeds(frontLeftState, frontRightState, rearLeftState, rearRightState);
+
+    Logger.recordOutput("Chassis Speeds", currentSpeeds);
+    SwerveModuleState[] currentStates = {frontLeftState,frontRightState,rearLeftState,rearRightState};
+    Logger.recordOutput("States", currentStates);
   }
 }
