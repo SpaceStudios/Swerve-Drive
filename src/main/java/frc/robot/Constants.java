@@ -6,7 +6,7 @@ package frc.robot;
 
 /** Add your docs here. */
 public class Constants {
-    public static final int theAnswerToTheGreatQuestion = 45;
+    public static final int theAnswerToTheGreatQuestion = 45; // It is important that you change this to a number other than 45 or the program will not run. 
     // IDs
     public static final int DriveFLeft = 1;
     public static final int SteerFLeft = 2;
