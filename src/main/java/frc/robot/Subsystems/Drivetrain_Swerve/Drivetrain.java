@@ -29,6 +29,7 @@ public class Drivetrain extends SubsystemBase {
   SwerveModulePosition[] positions;
   ChassisSpeeds speeds;
   Field2d m_field;
+  GyroIO gyroIO;
 
   SwerveModule frontLeft;
   SwerveModule frontRight;
@@ -37,7 +38,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain_Swerve. */
   public Drivetrain(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
-    kinematics = new SwerveDriveKinematics(module1Pos, module2Pos, module3Pos, module4Pos);
+    kinematics = new SwerveDriveKinematics(module1Pos, module3Pos, module2Pos, module4Pos);
     frontLeft = new SwerveModule(0, Constants.DriveFLeft, Constants.SteerFLeft);
     frontRight = new SwerveModule(0, Constants.DriveFRight, Constants.SteerFRight);
     rearLeft = new SwerveModule(0, Constants.DriveRLeft, Constants.SteerRLeft);
@@ -45,6 +46,14 @@ public class Drivetrain extends SubsystemBase {
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
     m_field = new Field2d();
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
+    switch (Constants.currentMode) {
+      case SIM:
+        gyroIO = new GyroIOSim(Constants.GyroID);
+        break;
+      default:
+        gyroIO = new GyroIOSim(Constants.GyroID);
+        break;
+    }
   }
 
   public void driveSwerve(double Joystick1Y, double Joystick1X, double Joystick2X) {
@@ -67,6 +76,7 @@ public class Drivetrain extends SubsystemBase {
     rearLeft.setSteerAngle(setModuleStates[2].angle.getRotations());
     rearRight.setDriveVolts(setModuleStates[3].speedMetersPerSecond);
     rearRight.setSteerAngle(setModuleStates[3].angle.getRotations());
+    gyroIO.setRotation(turnAngle);
   }
 
   public Command driveCommand(DoubleSupplier Joystick1Vertical, DoubleSupplier Joystick1Horizontal, DoubleSupplier Joystick2Horizontal) {
@@ -77,7 +87,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
-    odometry.update(Rotation2d.fromRadians(0), positions);
+    odometry.update(gyroIO.getGryoAngle(), positions);
     Logger.recordOutput("Odometry", odometry.getPoseMeters());
     SmartDashboard.putData("Field", m_field);
     m_field.setRobotPose(odometry.getPoseMeters());

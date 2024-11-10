@@ -8,6 +8,12 @@
   "NetworkTables": {
     "transitory": {
       "AdvantageKit": {
+        "DriverStation": {
+          "open": true
+        },
+        "PowerDistribution": {
+          "open": true
+        },
         "RealOutputs": {
           "Logger": {
             "open": true

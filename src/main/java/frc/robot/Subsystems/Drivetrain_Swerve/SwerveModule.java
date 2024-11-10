@@ -4,8 +4,6 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
-import javax.sound.sampled.ReverbType;
-
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Rotation2d;

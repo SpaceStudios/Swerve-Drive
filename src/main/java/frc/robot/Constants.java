@@ -7,7 +7,7 @@ package frc.robot;
 /** Add your docs here. */
 public class Constants {
     public static final int theAnswerToTheGreatQuestion = 45;
-
+    // IDs
     public static final int DriveFLeft = 1;
     public static final int SteerFLeft = 2;
     public static final int DriveFRight = 3;
@@ -16,6 +16,7 @@ public class Constants {
     public static final int SteerRLeft = 6;
     public static final int DriveRRight = 7;
     public static final int SteerRRight = 8;
+    public static final int GyroID = 9;
 
     // Drive Train PID Constants
     public static final double kPDrive = 0;
@@ -23,7 +24,7 @@ public class Constants {
     public static final double KDDrive = 0;
 
     // Steer PID Constants
-    public static final double kPSteer = 0;
+    public static final double kPSteer = 20.0;
     public static final double kISteer = 0;
     public static final double KDSteer = 0;
 
