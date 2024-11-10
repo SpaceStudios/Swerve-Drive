@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Drivetrain_Swerve.Drivetrain;
-import frc.robot.Subsystems.Drivetrain_Swerve.Commands.Drive;
 
 public class RobotContainer {
   public RobotContainer() {
@@ -20,7 +19,7 @@ public class RobotContainer {
   private void configureBindings() {
     mainDrive.setDefaultCommand(
       mainDrive.driveCommand(
-        () -> modifyJoystick(-controller.getLeftY()), () -> modifyJoystick(controller.getRightX()))
+        () -> modifyJoystick(-controller.getLeftY()), () -> modifyJoystick(controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
     );
   }
 

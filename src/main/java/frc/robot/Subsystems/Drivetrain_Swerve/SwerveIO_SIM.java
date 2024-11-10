@@ -14,12 +14,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.datalog.DataLogReader;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
 import frc.robot.Constants;
-import frc.robot.Subsystems.Drivetrain_Swerve.Commands.Drive;
 
 /** Add your docs here. */
 public class SwerveIO_SIM implements SwerveIO {
@@ -28,12 +28,14 @@ public class SwerveIO_SIM implements SwerveIO {
 
     VoltageOut DriveVoltage = new VoltageOut(0);
     VoltageOut SteerVoltage = new VoltageOut(0);
+    TalonFXSimState DriveSimState;
+    TalonFXSimState SteerSimState;
 
     public SwerveIO_SIM(int DriveID, int SteerID) {
         DriveMotor = new TalonFX(DriveID);
         SteerMotor = new TalonFX(SteerID);
 
-        TalonFXSimState DriveSimState = DriveMotor.getSimState();
+        DriveSimState = DriveMotor.getSimState();
         DriveSimState.setSupplyVoltage(RoboRioSim.getVInVoltage());
 
         // Drive PIDs
@@ -51,7 +53,7 @@ public class SwerveIO_SIM implements SwerveIO {
         DriveMotor.getConfigurator().apply(DrivePIDConfig);
         SteerMotor.getConfigurator().apply(SteerPIDConfig);
 
-        TalonFXSimState SteerSimState = SteerMotor.getSimState();
+        SteerSimState = SteerMotor.getSimState();
         SteerSimState.setSupplyVoltage(RoboRioSim.getVInVoltage());
     }
 
@@ -67,8 +69,8 @@ public class SwerveIO_SIM implements SwerveIO {
 
     @Override
     public void getData(SwerveData data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getData'");
+        data.DriveVelocity = DriveMotor.getVelocity().getValueAsDouble();
+        data.SteerPosition = SteerMotor.getPosition().getValueAsDouble();
     }
 
     @Override

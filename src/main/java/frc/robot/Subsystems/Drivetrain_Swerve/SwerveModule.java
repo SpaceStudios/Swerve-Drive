@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import javax.sound.sampled.ReverbType;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -23,6 +25,7 @@ public class SwerveModule {
         currentState = newState;
         CurrentDistance = Distance;
         io = new SwerveIO_SIM(DriveID, SteerID);
+        mainData = new SwerveData();
     }
 
     public SwerveModulePosition getPosition() {
@@ -46,8 +49,8 @@ public class SwerveModule {
         return io.getRotation();
     }
 
-    public void updateInputs() {
+    public SwerveModuleState getCurrentState() {
         io.getData(mainData);
-        currentState = new SwerveModuleState();
+        return new SwerveModuleState(mainData.DriveVelocity,Rotation2d.fromRadians(mainData.SteerPosition*(2*Math.PI)));
     }
 }
