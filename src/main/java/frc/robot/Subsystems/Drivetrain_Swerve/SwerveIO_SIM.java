@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -22,18 +24,21 @@ public class SwerveIO_SIM implements SwerveIO {
 
     @Override
     public void setDriveVolts(double volts) {
-        DriveMotor.setInput(MathUtil.clamp(volts, -12, 12));
+        DriveMotor.setInputVoltage(MathUtil.clamp(volts, -12, 12));
     }
 
     @Override
     public void setSteerAngle(double angle) {
-        SteerMotor.setInputVoltage(angle);
+        SteerMotor.setInputVoltage(MathUtil.clamp(angle*24, -12, 12));
     }
 
     @Override
     public void getData(SwerveData data) {
+        data.DriveOutput = DriveMotor.getCurrentDrawAmps();
+        data.DrivePosition = DriveMotor.getAngularPositionRotations();
         data.DriveVelocity = DriveMotor.getAngularVelocityRPM()*60.0;
         data.SteerPosition = SteerMotor.getAngularPositionRad();
+        data.SteerOutout = SteerMotor.getCurrentDrawAmps();
     }
 
     @Override

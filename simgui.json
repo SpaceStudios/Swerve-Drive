@@ -1,16 +1,14 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Field": "Field2d"
     }
   },
   "NetworkTables": {
     "transitory": {
       "AdvantageKit": {
         "RealOutputs": {
-          "LoggedRobot": {
-            "open": true
-          },
           "Logger": {
             "open": true
           },
@@ -22,6 +20,15 @@
         "open": true
       },
       "FMSInfo": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Field": {
+          "double[]##v_/SmartDashboard/Field/Robot": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       }
     }
