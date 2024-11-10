@@ -29,7 +29,11 @@ public class Constants {
 
     // Drive Train Constants
     public static final double speedRadians = 2.0*Math.PI;
-    public static final double robotSpeedRPS = 160;
+    public static final double robotSpeedRPS = 12;
+    public static final double driveRatio = 12.8;
+    public static final double driveMOI = 0.004;
+    public static final double steerRatio = 12.8;
+    public static final double steerMOI = 0.004;
 
     public static final Mode currentMode = Mode.SIM;
 

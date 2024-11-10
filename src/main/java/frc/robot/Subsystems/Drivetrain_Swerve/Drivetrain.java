@@ -34,14 +34,11 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain_Swerve. */
   public Drivetrain(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
-    speeds = new ChassisSpeeds();
-    positions = new SwerveModulePosition[] {new SwerveModulePosition()};
     kinematics = new SwerveDriveKinematics(module1Pos, module2Pos, module3Pos, module4Pos);
-    SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(speeds);
-    frontLeft = new SwerveModule(moduleStates[0], 0, Constants.DriveFLeft, Constants.SteerFLeft);
-    frontRight = new SwerveModule(moduleStates[1], 0, Constants.DriveFRight, Constants.SteerFRight);
-    rearLeft = new SwerveModule(moduleStates[2], 0, Constants.DriveRLeft, Constants.SteerRLeft);
-    rearRight = new SwerveModule(moduleStates[3], 0, Constants.DriveRRight, Constants.SteerRRight);
+    frontLeft = new SwerveModule(0, Constants.DriveFLeft, Constants.SteerFLeft);
+    frontRight = new SwerveModule(0, Constants.DriveFRight, Constants.SteerFRight);
+    rearLeft = new SwerveModule(0, Constants.DriveRLeft, Constants.SteerRLeft);
+    rearRight = new SwerveModule(0, Constants.DriveRRight, Constants.SteerRRight);
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
 
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);

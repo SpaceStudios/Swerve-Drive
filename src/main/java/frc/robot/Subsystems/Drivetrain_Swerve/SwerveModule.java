@@ -6,6 +6,8 @@ package frc.robot.Subsystems.Drivetrain_Swerve;
 
 import javax.sound.sampled.ReverbType;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -15,14 +17,12 @@ import frc.robot.Subsystems.Drivetrain_Swerve.SwerveIO.SwerveData;
 
 /** Add your docs here. */
 public class SwerveModule {
-    SwerveModuleState currentState;
     double CurrentDistance;
     SwerveIO io;
     SwerveData mainData;
     SwerveDriveKinematics kinematics;
 
-    public SwerveModule(SwerveModuleState newState, double Distance, int DriveID, int SteerID) {
-        currentState = newState;
+    public SwerveModule(double Distance, int DriveID, int SteerID) {
         CurrentDistance = Distance;
         io = new SwerveIO_SIM(DriveID, SteerID);
         mainData = new SwerveData();
