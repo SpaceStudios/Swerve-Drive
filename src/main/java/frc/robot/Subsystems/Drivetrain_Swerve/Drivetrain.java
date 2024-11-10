@@ -63,7 +63,7 @@ public class Drivetrain extends SubsystemBase {
     Logger.recordOutput("Move Speed Lateral", moveSpeedLateral);
     Logger.recordOutput("Move Speed Horizontal", moveSpeedHorizontal);
     Logger.recordOutput("Turn Speed", turnAngle);
-    ChassisSpeeds newSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(moveSpeedLateral,moveSpeedHorizontal,turnAngle, Rotation2d.fromRadians(Math.PI));
+    ChassisSpeeds newSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(moveSpeedLateral,moveSpeedHorizontal,turnAngle, gyroIO.getGryoAngle());
     SwerveModuleState[] setModuleStates = kinematics.toSwerveModuleStates(newSpeeds);
     Logger.recordOutput("Swerve State Speed", setModuleStates[0].speedMetersPerSecond);
     Logger.recordOutput("Swerve Turn", setModuleStates[0].angle.getRotations());
@@ -76,7 +76,6 @@ public class Drivetrain extends SubsystemBase {
     rearLeft.setSteerAngle(setModuleStates[2].angle.getRotations());
     rearRight.setDriveVolts(setModuleStates[3].speedMetersPerSecond);
     rearRight.setSteerAngle(setModuleStates[3].angle.getRotations());
-    gyroIO.setRotation(turnAngle);
   }
 
   public Command driveCommand(DoubleSupplier Joystick1Vertical, DoubleSupplier Joystick1Horizontal, DoubleSupplier Joystick2Horizontal) {
@@ -87,7 +86,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
-    odometry.update(gyroIO.getGryoAngle(), positions);
+    odometry.update(new Rotation2d(), positions);
     Logger.recordOutput("Odometry", odometry.getPoseMeters());
     SmartDashboard.putData("Field", m_field);
     m_field.setRobotPose(odometry.getPoseMeters());

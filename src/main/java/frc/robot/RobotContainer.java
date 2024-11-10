@@ -19,7 +19,7 @@ public class RobotContainer {
   private void configureBindings() {
     mainDrive.setDefaultCommand(
       mainDrive.driveCommand(
-        () -> modifyJoystick(controller.getLeftY()), () -> modifyJoystick(controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
+        () -> modifyJoystick(-controller.getLeftY()), () -> modifyJoystick(-controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
     );
   }
 
@@ -31,7 +31,7 @@ public class RobotContainer {
   Drivetrain mainDrive = new Drivetrain(new Translation2d(-0.1,-0.1),new Translation2d(0.1,-0.1),new Translation2d(-0.1,0.1),new Translation2d(0.1,0.1));
 
   private double modifyJoystick(double in) {
-    if (Math.abs(in) < 0.05) {
+    if (Math.abs(in) < 0.075) {
       return 0;
     }
     return in * in * Math.signum(in);

@@ -15,6 +15,9 @@
           "open": true
         },
         "RealOutputs": {
+          "LoggedRobot": {
+            "open": true
+          },
           "Logger": {
             "open": true
           },
@@ -22,8 +25,7 @@
         },
         "SystemStats": {
           "open": true
-        },
-        "open": true
+        }
       },
       "FMSInfo": {
         "open": true
@@ -34,8 +36,7 @@
             "open": true
           },
           "open": true
-        },
-        "open": true
+        }
       }
     }
   },

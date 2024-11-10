@@ -18,12 +18,12 @@ public class GyroIOSim implements GyroIO{
 
     @Override
     public Rotation2d getGryoAngle() {
-        return Rotation2d.fromRadians(gyroSim.getAngle());
+        return new Rotation2d();
     }
 
     @Override
     public void setRotation(double angle) {
-        gyroSim.setAngle(angle);
+        
     }
 
     @Override
