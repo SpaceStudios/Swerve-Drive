@@ -21,7 +21,7 @@ public class Constants {
     // Drive Train PID Constants
     public static final double kPDrive = 0;
     public static final double kIDrive = 0;
-    public static final double KDDrive = 0;
+    public static final double kDDrive = 0;
 
     // Steer PID Constants
     public static final double kPSteer = 20.0;
