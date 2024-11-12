@@ -6,6 +6,8 @@ package frc.robot.Subsystems.Drivetrain_Swerve;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -21,8 +23,8 @@ public class SwerveIO_Sparkmax implements SwerveIO {
     RelativeEncoder driveEncoder;
     RelativeEncoder steerEncoder;
 
-    PIDController drivePID;
-    PIDController steerPID;
+    SparkPIDController drivePID;
+    SparkPIDController steerPID;
     public SwerveIO_Sparkmax(int DriveID, int SteerID) {
         DriveMotor = new CANSparkMax(DriveID, MotorType.kBrushless);
         SteerMotor = new CANSparkMax(SteerID, MotorType.kBrushless);
@@ -30,8 +32,8 @@ public class SwerveIO_Sparkmax implements SwerveIO {
         driveEncoder = DriveMotor.getEncoder();
         steerEncoder = SteerMotor.getEncoder();
 
-        drivePID = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive);
-        steerPID = new PIDController(Constants.kPSteer, Constants.kISteer, Constants.KDSteer);
+        drivePID = DriveMotor.getPIDController();
+        steerPID = SteerMotor.getPIDController();
     }
 
     @Override
@@ -41,17 +43,17 @@ public class SwerveIO_Sparkmax implements SwerveIO {
 
     @Override
     public void setDriveSpeed(double rps) {
-        DriveMotor.setVoltage(drivePID.calculate(rps));
+        drivePID.setReference(rps*60, ControlType.kVelocity);
     }
 
     @Override
     public void setSteerAngle(double angle) {
-        SteerMotor.setVoltage(steerPID.calculate(steerEncoder.getPosition()*(2*Math.PI), angle));
+        steerPID.setReference(angle/(Math.PI*2), ControlType.kPosition);
     }
 
     @Override
     public double getDistance() {
-        return driveEncoder.getVelocity();
+        return driveEncoder.getPosition();
     }
 
     @Override
@@ -63,7 +65,7 @@ public class SwerveIO_Sparkmax implements SwerveIO {
     public void getData(SwerveData data) {
         data.DriveOutput = DriveMotor.getAppliedOutput();
         data.SteerOutout = SteerMotor.getAppliedOutput();
-        
+
         data.DrivePosition = driveEncoder.getPosition();
         data.DriveVelocity = driveEncoder.getVelocity();
         data.SteerPosition = steerEncoder.getPosition();
