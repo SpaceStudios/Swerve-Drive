@@ -34,6 +34,14 @@ public class SwerveIO_Sparkmax implements SwerveIO {
 
         drivePID = DriveMotor.getPIDController();
         steerPID = SteerMotor.getPIDController();
+        
+        drivePID.setP(Constants.kPDrive);
+        drivePID.setI(Constants.kIDrive);
+        drivePID.setD(Constants.kDDrive);
+
+        steerPID.setP(Constants.kPSteer);
+        steerPID.setI(Constants.kISteer);
+        steerPID.setD(Constants.KDSteer);
     }
 
     @Override
