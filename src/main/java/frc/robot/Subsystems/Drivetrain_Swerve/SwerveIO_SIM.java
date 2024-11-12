@@ -19,18 +19,26 @@ public class SwerveIO_SIM implements SwerveIO {
     DCMotorSim SteerMotor;
 
     PIDController steerPID;
+    PIDController drivePID;
     
     public SwerveIO_SIM(int DriveID, int SteerID) {
         DriveMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.driveRatio, Constants.driveMOI);
         SteerMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.steerRatio, Constants.steerMOI);
 
         steerPID = new PIDController(Constants.kPSteer, Constants.kISteer, Constants.KDSteer, 0.020);
+        drivePID = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive, 0.020);
     }
 
     @Override
     public void setDriveVolts(double volts) {
         Logger.recordOutput("Input Volts", volts);
         DriveMotor.setInputVoltage(MathUtil.clamp(volts, -12, 12));
+    }
+
+    @Override
+    public void setDriveSpeed(double rps) {
+        Logger.recordOutput("Input Speed", rps);
+        DriveMotor.setInputVoltage(MathUtil.clamp(drivePID.calculate(rps), -12, 12));
     }
 
     @Override

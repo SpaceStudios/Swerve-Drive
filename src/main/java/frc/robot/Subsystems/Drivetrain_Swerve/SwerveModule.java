@@ -36,6 +36,10 @@ public class SwerveModule {
         io.setSteerAngle(angleRad);
     }
 
+    public void setDriveSpeed(double rps) {
+        io.setDriveSpeed(rps);
+    }
+
     public double getDriveDistance() {
         return io.getDistance();
     }
