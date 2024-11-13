@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain_Swerve.SwerveIO.SwerveData;
 
 /** Add your docs here. */
@@ -19,7 +20,17 @@ public class SwerveModule {
 
     public SwerveModule(double Distance, int DriveID, int SteerID) {
         CurrentDistance = Distance;
-        io = new SwerveIO_SIM(DriveID, SteerID);
+        switch (Constants.currentMode) {
+            case SIM:
+                io = new SwerveIO_SIM(DriveID, SteerID);
+                break;
+            case REAL:
+                io = new SwerveIO_Sparkmax(DriveID, SteerID);
+                break;
+            case REPLAY:
+                io = new SwerveIO_SIM(DriveID, SteerID);
+                break;
+        }
         mainData = new SwerveData();
     }
 
