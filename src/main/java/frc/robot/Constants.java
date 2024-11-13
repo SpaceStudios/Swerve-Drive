@@ -19,7 +19,7 @@ public class Constants {
     public static final int GyroID = 9;
 
     // Drive Train PID Constants
-    public static final double kPDrive = 0;
+    public static final double kPDrive = 20.0;
     public static final double kIDrive = 0;
     public static final double kDDrive = 0;
 
