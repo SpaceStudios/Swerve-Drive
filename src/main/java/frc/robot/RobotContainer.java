@@ -18,7 +18,7 @@ public class RobotContainer {
   private void configureBindings() {
     mainDrive.setDefaultCommand(
       mainDrive.driveCommand(
-        () -> modifyJoystick(-controller.getLeftY()), () -> modifyJoystick(-controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
+        () -> -modifyJoystick(controller.getLeftY()), () -> -modifyJoystick(controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
     );
   }
 
