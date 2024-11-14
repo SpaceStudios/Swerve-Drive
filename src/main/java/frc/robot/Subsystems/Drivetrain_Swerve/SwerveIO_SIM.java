@@ -38,7 +38,11 @@ public class SwerveIO_SIM implements SwerveIO {
     @Override
     public void setDriveSpeed(double rps) {
         Logger.recordOutput("Input Speed", rps);
-        DriveMotor.setInputVoltage(MathUtil.clamp(drivePID.calculate(rps), -12, 12));
+        if (rps == 0) {
+            DriveMotor.setInputVoltage(0);
+        } else {
+            DriveMotor.setInputVoltage(MathUtil.clamp(drivePID.calculate(rps), -12, 12));
+        }
     }
 
     @Override
@@ -54,7 +58,7 @@ public class SwerveIO_SIM implements SwerveIO {
         
         data.DriveOutput = DriveMotor.getCurrentDrawAmps();
         data.DrivePosition = DriveMotor.getAngularPositionRotations();
-        data.DriveVelocity = DriveMotor.getAngularVelocityRPM()*60.0;
+        data.DriveVelocity = DriveMotor.getAngularVelocityRPM()/60.0;
         data.SteerPosition = SteerMotor.getAngularPositionRad();
         data.SteerOutout = SteerMotor.getCurrentDrawAmps();
     }

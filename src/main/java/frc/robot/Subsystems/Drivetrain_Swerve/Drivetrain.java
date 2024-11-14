@@ -60,6 +60,9 @@ public class Drivetrain extends SubsystemBase {
     double turnAngle = Joystick2X*Constants.speedRadians;
     double moveSpeedLateral = Joystick1Y*Constants.robotSpeedRPS;
     double moveSpeedHorizontal = Joystick1X*Constants.robotSpeedRPS;
+    Logger.recordOutput("Joystick1Y", Joystick1Y);
+    Logger.recordOutput("Joystick1X", Joystick1X);
+    Logger.recordOutput("Joystick2X", Joystick2X);
     Logger.recordOutput("Move Speed Lateral", moveSpeedLateral);
     Logger.recordOutput("Move Speed Horizontal", moveSpeedHorizontal);
     Logger.recordOutput("Turn Speed", turnAngle);

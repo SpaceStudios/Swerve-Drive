@@ -19,22 +19,22 @@ public class Constants {
     public static final int GyroID = 9;
 
     // Drive Train PID Constants
-    public static final double kPDrive = 20.0;
-    public static final double kIDrive = 0;
-    public static final double kDDrive = 0;
+    public static final double kPDrive = 2;
+    public static final double kIDrive = 1;
+    public static final double kDDrive = 1;
 
     // Steer PID Constants
-    public static final double kPSteer = 20.0;
-    public static final double kISteer = 0;
-    public static final double KDSteer = 0;
+    public static final double kPSteer = 3.5;
+    public static final double kISteer = 1;
+    public static final double KDSteer = 1;
 
     // Drive Train Constants
     public static final double speedRadians = 2.0*Math.PI;
     public static final double robotSpeedRPS = 12;
     public static final double driveRatio = 12.8;
-    public static final double driveMOI = 0.004;
+    public static final double driveMOI = 0.127;
     public static final double steerRatio = 12.8;
-    public static final double steerMOI = 0.004;
+    public static final double steerMOI = 0.127;
 
     public static final Mode currentMode = Mode.SIM;
 
@@ -43,4 +43,9 @@ public class Constants {
         SIM,
         REPLAY
     }
+
+    // Steer PID Constants
+    public static final double kPPivot = 3.5;
+    public static final double kIPivot = 1;
+    public static final double KDPivot = 1;
 }

@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -17,6 +19,8 @@ public class SwerveModule {
     SwerveIO io;
     SwerveData mainData;
     SwerveDriveKinematics kinematics;
+    int SetDriveID;
+    int SetSteerID;
 
     public SwerveModule(double Distance, int DriveID, int SteerID) {
         CurrentDistance = Distance;
@@ -32,6 +36,8 @@ public class SwerveModule {
                 break;
         }
         mainData = new SwerveData();
+        SetDriveID = DriveID;
+        SetSteerID = SteerID;
     }
 
     public SwerveModulePosition getPosition() {
@@ -44,10 +50,12 @@ public class SwerveModule {
     }
 
     public void setSteerAngle(double angleRad) {
+        Logger.recordOutput("Steer Input"+SetSteerID, angleRad);
         io.setSteerAngle(angleRad);
     }
 
     public void setDriveSpeed(double rps) {
+        Logger.recordOutput("Drive Input"+SetDriveID, -rps);
         io.setDriveSpeed(rps);
     }
 
@@ -61,6 +69,8 @@ public class SwerveModule {
 
     public SwerveModuleState getCurrentState() {
         io.getData(mainData);
+        Logger.recordOutput("Drive Output"+SetDriveID, mainData.DriveVelocity);
+        Logger.recordOutput("Steer Output"+SetSteerID, mainData.SteerPosition*(2*Math.PI));
         return new SwerveModuleState(mainData.DriveVelocity,Rotation2d.fromRadians(mainData.SteerPosition*(2*Math.PI)));
     }
 }
