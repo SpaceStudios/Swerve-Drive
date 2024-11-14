@@ -36,6 +36,9 @@ public class Constants {
     public static final double steerRatio = 12.8;
     public static final double steerMOI = 0.127;
 
+    public static final double climbRatio = 12.8;
+    public static final double climbMOI = 0.004;
+
     public static final Mode currentMode = Mode.SIM;
 
     public static enum Mode {

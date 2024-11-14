@@ -31,7 +31,7 @@ public class RobotContainer {
   }
 
   CommandXboxController controller = new CommandXboxController(0);
-  Drivetrain mainDrive = new Drivetrain(new Translation2d(-0.1,-0.1),new Translation2d(0.1,-0.1),new Translation2d(-0.1,0.1),new Translation2d(0.1,0.1));
+  Drivetrain mainDrive = new Drivetrain(new Translation2d(0.1,0.1),new Translation2d(-0.1,0.1),new Translation2d(0.1,-0.1),new Translation2d(-0.1,-0.1));
   Pivot mainPivot = new Pivot();
 
   private double modifyJoystick(double in) {
