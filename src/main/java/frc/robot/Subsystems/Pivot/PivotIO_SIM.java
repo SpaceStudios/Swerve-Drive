@@ -25,9 +25,9 @@ public class PivotIO_SIM implements PivotIO {
     PIDController pivotPidController;
 
     public PivotIO_SIM() {
-        PivotMechanism = new Mechanism2d(3, 3);
-        pivotRoot = PivotMechanism.getRoot("Pivot", 2, 0);
-        pivotJoint = pivotRoot.append(new MechanismLigament2d("PivotJoint", 3, 0));
+        PivotMechanism = new Mechanism2d(1, 1);
+        pivotRoot = PivotMechanism.getRoot("Pivot", 0, 0);
+        pivotJoint = pivotRoot.append(new MechanismLigament2d("PivotJoint", 1, 0));
         PivotMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.driveRatio, Constants.driveMOI);
         pivotPidController = new PIDController(Constants.kPPivot, Constants.kIPivot, Constants.KDPivot);
     }
