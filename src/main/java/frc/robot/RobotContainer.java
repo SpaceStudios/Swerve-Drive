@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Drivetrain_Swerve.Drivetrain;
 import frc.robot.Subsystems.Pivot.Pivot;
 import frc.robot.Subsystems.Pivot.Commands.PivotChange;
+import frc.robot.Subsystems.Shooter.shooterSubsystem;
+import frc.robot.Subsystems.Shooter.Commands.runLauncher;
+import frc.robot.Subsystems.Shooter.Commands.runShooter;
 
 public class RobotContainer {
   public RobotContainer() {
@@ -24,6 +27,9 @@ public class RobotContainer {
     );
     controller.y().onTrue(new PivotChange(mainPivot, 1));
     controller.x().onTrue(new PivotChange(mainPivot, -1));
+    controller.rightTrigger().whileTrue(new runLauncher(mainShooter, 1));
+    controller.b().whileTrue(new runShooter(mainShooter, 1));
+    controller.a().whileTrue(new runLauncher(mainShooter, -1)).whileTrue(new runShooter(mainShooter, -1));
   }
 
   public Command getAutonomousCommand() {
@@ -33,6 +39,7 @@ public class RobotContainer {
   CommandXboxController controller = new CommandXboxController(0);
   Drivetrain mainDrive = new Drivetrain(new Translation2d(0.1,0.1),new Translation2d(-0.1,0.1),new Translation2d(0.1,-0.1),new Translation2d(-0.1,-0.1));
   Pivot mainPivot = new Pivot();
+  shooterSubsystem mainShooter = new shooterSubsystem();
 
   private double modifyJoystick(double in) {
     if (Math.abs(in) < 0.1) {
