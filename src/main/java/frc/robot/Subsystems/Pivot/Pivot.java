@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Pivot;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Pivot extends SubsystemBase {
@@ -13,20 +15,21 @@ public class Pivot extends SubsystemBase {
   PivotIO pivotIO;
   public Pivot() {
     PivotSettings = new double[] {0,Math.toRadians(45),Math.toRadians(65)};
-    pivotSetting = 0;
+    pivotSetting = 2;
     pivotIO = new PivotIO_SIM();
   }
 
   public void setPivotAngle(double change) {
-    if (pivotSetting + change >= 0 && pivotSetting + change <= PivotSettings.length) {
+    if (pivotSetting + change >= 0 && pivotSetting + change <= PivotSettings.length-1) {
       pivotSetting += change;      
     }
-    pivotIO.setPivotAngle(pivotSetting);
+    Logger.recordOutput("Pivot Setting Estimated", pivotSetting);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     pivotIO.PivotUpdate();
+    pivotIO.setPivotAngle(PivotSettings[pivotSetting]);
   }
 }

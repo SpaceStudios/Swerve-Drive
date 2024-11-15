@@ -69,7 +69,7 @@ public class SwerveModule {
 
     public SwerveModuleState getCurrentState() {
         io.getData(mainData);
-        Logger.recordOutput("Drive Output"+SetDriveID, mainData.DriveVelocity);
+        Logger.recordOutput("Drive Velocity"+SetDriveID, mainData.DriveVelocity);
         Logger.recordOutput("Steer Output"+SetSteerID, mainData.SteerPosition*(2*Math.PI));
         return new SwerveModuleState(mainData.DriveVelocity,Rotation2d.fromRadians(mainData.SteerPosition*(2*Math.PI)));
     }

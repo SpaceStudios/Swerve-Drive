@@ -41,7 +41,7 @@ public class SwerveIO_SIM implements SwerveIO {
         if (rps == 0) {
             DriveMotor.setInputVoltage(0);
         } else {
-            DriveMotor.setInputVoltage(MathUtil.clamp(drivePID.calculate(rps), -12, 12));
+            DriveMotor.setInputVoltage(MathUtil.clamp(drivePID.calculate(DriveMotor.getAngularVelocityRPM()/60, rps), -12, 12));
         }
     }
 

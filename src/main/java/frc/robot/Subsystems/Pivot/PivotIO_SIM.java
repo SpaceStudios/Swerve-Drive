@@ -6,6 +6,7 @@ package frc.robot.Subsystems.Pivot;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -27,15 +28,14 @@ public class PivotIO_SIM implements PivotIO {
         PivotMechanism = new Mechanism2d(3, 3);
         pivotRoot = PivotMechanism.getRoot("Pivot", 2, 0);
         pivotJoint = pivotRoot.append(new MechanismLigament2d("PivotJoint", 3, 0));
-        PivotMotor = new DCMotorSim(DCMotor.getNEO(0), Constants.driveRatio, Constants.driveMOI);
+        PivotMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.driveRatio, Constants.driveMOI);
         pivotPidController = new PIDController(Constants.kPPivot, Constants.kIPivot, Constants.KDPivot);
-
-        PivotMotor.update(0.020);
     }
 
     @Override
     public void setPivotAngle(double angleRad) {
-        PivotMotor.setInputVoltage(pivotPidController.calculate(PivotMotor.getAngularPositionRad(), angleRad));
+        Logger.recordOutput("Pivot Input", angleRad);
+        PivotMotor.setInputVoltage(MathUtil.clamp(pivotPidController.calculate(PivotMotor.getAngularPositionRad(), angleRad), -12, 12));
     }
 
     @Override
@@ -45,6 +45,7 @@ public class PivotIO_SIM implements PivotIO {
 
     @Override
     public void PivotUpdate() {
+        PivotMotor.update(0.020);
         pivotJoint.setAngle(Rotation2d.fromRadians(PivotMotor.getAngularPositionRad()));
         Logger.recordOutput("Pivot Mechanism", PivotMechanism);
         Logger.recordOutput("Pivot Setting", PivotMotor.getAngularPositionRad());

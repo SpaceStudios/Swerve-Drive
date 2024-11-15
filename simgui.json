@@ -1,6 +1,7 @@
 {
   "NTProvider": {
     "types": {
+      "/AdvantageKit/RealOutputs/Pivot Mechanism": "Mechanism2d",
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Field": "Field2d"
     }
@@ -14,7 +15,8 @@
           },
           "Logger": {
             "open": true
-          }
+          },
+          "open": true
         },
         "open": true
       },

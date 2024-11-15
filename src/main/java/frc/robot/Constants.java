@@ -19,9 +19,9 @@ public class Constants {
     public static final int GyroID = 9;
 
     // Drive Train PID Constants
-    public static final double kPDrive = 2;
-    public static final double kIDrive = 1;
-    public static final double kDDrive = 1;
+    public static final double kPDrive = 1;
+    public static final double kIDrive = 0;
+    public static final double kDDrive = 0;
 
     // Steer PID Constants
     public static final double kPSteer = 3.5;
@@ -39,6 +39,8 @@ public class Constants {
     public static final double climbRatio = 12.8;
     public static final double climbMOI = 0.004;
 
+    public static final double WheelSize = 0.2;
+
     public static final Mode currentMode = Mode.SIM;
 
     public static enum Mode {
@@ -47,7 +49,7 @@ public class Constants {
         REPLAY
     }
 
-    // Steer PID Constants
+    // Pivot PID Constants
     public static final double kPPivot = 3.5;
     public static final double kIPivot = 1;
     public static final double KDPivot = 1;
