@@ -15,7 +15,7 @@ public class Pivot extends SubsystemBase {
   PivotIO pivotIO;
   public Pivot() {
     PivotSettings = new double[] {Math.toRadians(45),Math.toRadians(65)};
-    pivotSetting = 2;
+    pivotSetting = 0;
     pivotIO = new PivotIO_SIM();
   }
 
