@@ -9,4 +9,5 @@ public interface shooterIO {
     public abstract void setShooterVolts(double volts);
     public abstract void setLauncherVolts(double volts);
     public abstract double getShooterSpeed();
+    public abstract void motorUpdate();
 }

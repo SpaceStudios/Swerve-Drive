@@ -6,6 +6,7 @@ package frc.robot.Subsystems.Shooter;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.robot.Constants.universalConstants;
 
 /** Add your docs here. */
 public class shooterIO_SIM implements shooterIO {
@@ -14,23 +15,27 @@ public class shooterIO_SIM implements shooterIO {
 
     public shooterIO_SIM(int ShooterID, int LauncherID) {
         shooterMotor = new DCMotorSim(DCMotor.getNEO(1), 1, 1);
-        launcherMotor = new DCMotorSim(DCMotor.getNEO(1), ShooterID, LauncherID)
+        launcherMotor = new DCMotorSim(DCMotor.getNEO(1), 1, 1);
     }
 
     @Override
     public void setShooterVolts(double volts) {
-        
+        shooterMotor.setInputVoltage(volts*universalConstants.MotorVoltage);
     }
 
     @Override
     public void setLauncherVolts(double volts) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setLauncherVolts'");
+        
+        launcherMotor.setInputVoltage(volts*universalConstants.MotorVoltage);
     }
 
     @Override
     public double getShooterSpeed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getShooterSpeed'");
+        return shooterMotor.getAngularVelocityRPM();
+    }
+
+    public void motorUpdate() {
+        shooterMotor.update(0.020);
+        launcherMotor.update(0.020);
     }
 }

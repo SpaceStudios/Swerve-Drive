@@ -53,6 +53,9 @@ public class Constants {
     public static final double kPPivot = 3.5;
     public static final double kIPivot = 1;
     public static final double KDPivot = 1;
+    public class universalConstants {
+        public static final double MotorVoltage = 12;
+    }
     public class ShooterConstants {
         public static final double ShooterLaunchSpeed = 100; // Desired Launch Speed in RPM
     }
