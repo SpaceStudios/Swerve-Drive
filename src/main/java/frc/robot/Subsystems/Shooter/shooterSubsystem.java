@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.Shooter;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class shooterSubsystem extends SubsystemBase {
@@ -29,5 +31,6 @@ public class shooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     io.motorUpdate();
+    Logger.recordOutput("Shooter Speed", getShooterSpeed());
   }
 }

@@ -72,6 +72,10 @@ public class Drivetrain extends SubsystemBase {
     SwerveModuleState[] setModuleStates = kinematics.toSwerveModuleStates(newSpeeds);
     Logger.recordOutput("Swerve State Speed", setModuleStates[0].speedMetersPerSecond);
     Logger.recordOutput("Swerve Turn", setModuleStates[0].angle.getRotations());
+    setModuleStates[0] = SwerveModuleState.optimize(setModuleStates[0], frontLeft.getRotation());
+    setModuleStates[1] = SwerveModuleState.optimize(setModuleStates[1], frontRight.getRotation());
+    setModuleStates[2] = SwerveModuleState.optimize(setModuleStates[2], rearLeft.getRotation());
+    setModuleStates[3] = SwerveModuleState.optimize(setModuleStates[3], rearRight.getRotation());
     Logger.recordOutput("Intended States", setModuleStates);
     frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
     frontLeft.setSteerAngle(setModuleStates[0].angle.getRotations());
