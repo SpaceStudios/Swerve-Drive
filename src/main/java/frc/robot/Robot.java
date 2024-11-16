@@ -23,6 +23,13 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
     if (Constants.theAnswerToTheGreatQuestion - 3 == 42) {
+      System.out.print("Jarlsberg Program Activating []");
+      for (int i = 0; i <= 20; i++) {
+        System.out.print("\r Jarlsberg Program Activating ["+i+"]");
+      }
+      System.out.println("");
+      System.out.println("Activation Sucessful");
+      System.out.println("Good Luck!");
       switch (robotConstants.currentMode) {
         case REAL:
          Logger.addDataReceiver(new WPILOGWriter("/media/sda1/")); 
