@@ -39,8 +39,8 @@ public class Drivetrain extends SubsystemBase {
   SwerveModule rearRight;
 
   /** Creates a new Drivetrain_Swerve. */
-  public Drivetrain(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
-    kinematics = new SwerveDriveKinematics(module1Pos, module3Pos, module2Pos, module4Pos);
+  public Drivetrain() {
+    kinematics = new SwerveDriveKinematics(drivetrainConstants.moduleFLPos,drivetrainConstants.moduleFRPos,drivetrainConstants.moduleRLPos,drivetrainConstants.moduleRRPos);
     frontLeft = new SwerveModule(0, RobotIDs.DriveFLeft, RobotIDs.SteerFLeft);
     frontRight = new SwerveModule(0, RobotIDs.DriveFRight, RobotIDs.SteerFRight);
     rearLeft = new SwerveModule(0, RobotIDs.DriveRLeft, RobotIDs.SteerRLeft);

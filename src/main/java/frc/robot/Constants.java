@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+
 /** Add your docs here. */
 public class Constants {
     public static final int theAnswerToTheGreatQuestion = 45; // It is important that you change this to a number other than 45 or the program will not run. 
@@ -38,6 +40,12 @@ public class Constants {
         public static final double driveMOI = 0.127;
         public static final double steerRatio = 12.8;
         public static final double steerMOI = 0.127;
+
+        //Swerve Module Translations
+        public static final Translation2d moduleFLPos = new Translation2d(0.1,0.1);
+        public static final Translation2d moduleFRPos = new Translation2d(0.1,0.1);
+        public static final Translation2d moduleRLPos = new Translation2d(0.1,0.1);
+        public static final Translation2d moduleRRPos = new Translation2d(0.1,0.1);
     }
     
     public class climberConstants {
