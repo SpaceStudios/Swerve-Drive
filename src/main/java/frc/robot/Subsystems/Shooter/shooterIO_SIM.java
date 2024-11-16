@@ -6,7 +6,7 @@ package frc.robot.Subsystems.Shooter;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.Constants.universalConstants;
+import frc.robot.Constants.robotConstants;
 
 /** Add your docs here. */
 public class shooterIO_SIM implements shooterIO {
@@ -20,13 +20,13 @@ public class shooterIO_SIM implements shooterIO {
 
     @Override
     public void setShooterVolts(double volts) {
-        shooterMotor.setInputVoltage(volts*universalConstants.MotorVoltage);
+        shooterMotor.setInputVoltage(volts*robotConstants.MotorVoltage);
     }
 
     @Override
     public void setLauncherVolts(double volts) {
         
-        launcherMotor.setInputVoltage(volts*universalConstants.MotorVoltage);
+        launcherMotor.setInputVoltage(volts*robotConstants.MotorVoltage);
     }
 
     @Override

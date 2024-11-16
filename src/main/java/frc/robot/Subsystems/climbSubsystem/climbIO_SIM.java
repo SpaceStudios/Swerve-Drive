@@ -6,7 +6,6 @@ package frc.robot.Subsystems.climbSubsystem;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.Constants;
 import frc.robot.Constants.climberConstants;
 
 /** Add your docs here. */
