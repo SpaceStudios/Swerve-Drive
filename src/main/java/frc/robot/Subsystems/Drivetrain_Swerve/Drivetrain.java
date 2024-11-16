@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.RobotIDs;
+import frc.robot.Constants.drivetrainConstants;
+import frc.robot.Constants.robotConstants;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -39,27 +42,27 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain_Swerve. */
   public Drivetrain(Translation2d module1Pos, Translation2d module2Pos, Translation2d module3Pos, Translation2d module4Pos) {
     kinematics = new SwerveDriveKinematics(module1Pos, module3Pos, module2Pos, module4Pos);
-    frontLeft = new SwerveModule(0, Constants.DriveFLeft, Constants.SteerFLeft);
-    frontRight = new SwerveModule(0, Constants.DriveFRight, Constants.SteerFRight);
-    rearLeft = new SwerveModule(0, Constants.DriveRLeft, Constants.SteerRLeft);
-    rearRight = new SwerveModule(0, Constants.DriveRRight, Constants.SteerRRight);
+    frontLeft = new SwerveModule(0, RobotIDs.DriveFLeft, RobotIDs.SteerFLeft);
+    frontRight = new SwerveModule(0, RobotIDs.DriveFRight, RobotIDs.SteerFRight);
+    rearLeft = new SwerveModule(0, RobotIDs.DriveRLeft, RobotIDs.SteerRLeft);
+    rearRight = new SwerveModule(0, RobotIDs.DriveRRight, RobotIDs.SteerRRight);
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
     m_field = new Field2d();
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
-    switch (Constants.currentMode) {
+    switch (robotConstants.currentMode) {
       case SIM:
-        gyroIO = new GyroIOSim(Constants.GyroID);
+        gyroIO = new GyroIOSim(RobotIDs.GyroID);
         break;
       default:
-        gyroIO = new GyroIOSim(Constants.GyroID);
+        gyroIO = new GyroIOSim(RobotIDs.GyroID);
         break;
     }
   }
 
   public void driveSwerve(double Joystick1Y, double Joystick1X, double Joystick2X) {
-    double turnAngle = Joystick2X*Constants.speedRadians;
-    double moveSpeedLateral = Joystick1Y*Constants.robotSpeedRPS;
-    double moveSpeedHorizontal = Joystick1X*Constants.robotSpeedRPS;
+    double turnAngle = Joystick2X*drivetrainConstants.speedRadians;
+    double moveSpeedLateral = Joystick1Y*drivetrainConstants.robotSpeedRPS;
+    double moveSpeedHorizontal = Joystick1X*drivetrainConstants.robotSpeedRPS;
     Logger.recordOutput("Joystick1Y", Joystick1Y);
     Logger.recordOutput("Joystick1X", Joystick1X);
     Logger.recordOutput("Joystick2X", Joystick2X);

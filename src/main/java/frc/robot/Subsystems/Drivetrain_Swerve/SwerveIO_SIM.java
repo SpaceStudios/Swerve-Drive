@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.Constants;
+import frc.robot.Constants.drivetrainConstants;
 
 /** Add your docs here. */
 public class SwerveIO_SIM implements SwerveIO {
@@ -22,11 +23,11 @@ public class SwerveIO_SIM implements SwerveIO {
     PIDController drivePID;
     
     public SwerveIO_SIM(int DriveID, int SteerID) {
-        DriveMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.driveRatio, Constants.driveMOI);
-        SteerMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.steerRatio, Constants.steerMOI);
+        DriveMotor = new DCMotorSim(DCMotor.getNEO(1), drivetrainConstants.driveRatio, drivetrainConstants.driveMOI);
+        SteerMotor = new DCMotorSim(DCMotor.getNEO(1), drivetrainConstants.steerRatio, drivetrainConstants.steerMOI);
 
-        steerPID = new PIDController(Constants.kPSteer, Constants.kISteer, Constants.KDSteer, 0.020);
-        drivePID = new PIDController(Constants.kPDrive, Constants.kIDrive, Constants.kDDrive, 0.020);
+        steerPID = new PIDController(drivetrainConstants.kPSteer, drivetrainConstants.kISteer, drivetrainConstants.KDSteer, 0.020);
+        drivePID = new PIDController(drivetrainConstants.kPDrive, drivetrainConstants.kIDrive, drivetrainConstants.kDDrive, 0.020);
     }
 
     @Override

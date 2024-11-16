@@ -7,13 +7,14 @@ package frc.robot.Subsystems.climbSubsystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.Constants;
+import frc.robot.Constants.climberConstants;
 
 /** Add your docs here. */
 public class climbIO_SIM implements climbIO {
     DCMotorSim ClimbMotor;
     
     public climbIO_SIM(int climbMotorID) {
-        ClimbMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.climbRatio, Constants.climbMOI);
+        ClimbMotor = new DCMotorSim(DCMotor.getNEO(1), climberConstants.climbRatio, climberConstants.climbMOI);
     }
 
     @Override

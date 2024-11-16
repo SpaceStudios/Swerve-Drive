@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.Constants;
+import frc.robot.Constants.drivetrainConstants;
 
 /** Add your docs here. */
 public class SwerveIO_Sparkmax implements SwerveIO {
@@ -35,13 +36,13 @@ public class SwerveIO_Sparkmax implements SwerveIO {
         drivePID = DriveMotor.getPIDController();
         steerPID = SteerMotor.getPIDController();
         
-        drivePID.setP(Constants.kPDrive);
-        drivePID.setI(Constants.kIDrive);
-        drivePID.setD(Constants.kDDrive);
+        drivePID.setP(drivetrainConstants.kPDrive);
+        drivePID.setI(drivetrainConstants.kIDrive);
+        drivePID.setD(drivetrainConstants.kDDrive);
 
-        steerPID.setP(Constants.kPSteer);
-        steerPID.setI(Constants.kISteer);
-        steerPID.setD(Constants.KDSteer);
+        steerPID.setP(drivetrainConstants.kPSteer);
+        steerPID.setI(drivetrainConstants.kISteer);
+        steerPID.setD(drivetrainConstants.KDSteer);
     }
 
     @Override

@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import frc.robot.Constants;
+import frc.robot.Constants.drivetrainConstants;
+import frc.robot.Constants.pivotConstants;
 
 /** Add your docs here. */
 public class PivotIO_SIM implements PivotIO {
@@ -28,8 +30,8 @@ public class PivotIO_SIM implements PivotIO {
         PivotMechanism = new Mechanism2d(1, 1);
         pivotRoot = PivotMechanism.getRoot("Pivot", 0.5, 0);
         pivotJoint = pivotRoot.append(new MechanismLigament2d("PivotJoint", 1, 0));
-        PivotMotor = new DCMotorSim(DCMotor.getNEO(1), Constants.driveRatio, Constants.driveMOI);
-        pivotPidController = new PIDController(Constants.kPPivot, Constants.kIPivot, Constants.KDPivot);
+        PivotMotor = new DCMotorSim(DCMotor.getNEO(1), drivetrainConstants.driveRatio, drivetrainConstants.driveMOI);
+        pivotPidController = new PIDController(pivotConstants.kPPivot, pivotConstants.kIPivot, pivotConstants.KDPivot);
     }
 
     @Override

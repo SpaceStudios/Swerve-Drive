@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
+import frc.robot.Constants.robotConstants;
 import frc.robot.Subsystems.Drivetrain_Swerve.SwerveIO.SwerveData;
 
 /** Add your docs here. */
@@ -24,7 +25,7 @@ public class SwerveModule {
 
     public SwerveModule(double Distance, int DriveID, int SteerID) {
         CurrentDistance = Distance;
-        switch (Constants.currentMode) {
+        switch (robotConstants.currentMode) {
             case SIM:
                 io = new SwerveIO_SIM(DriveID, SteerID);
                 break;
