@@ -9,7 +9,6 @@ import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -30,7 +29,6 @@ public class Drivetrain extends SubsystemBase {
   SwerveDriveKinematics kinematics;
   SwerveModulePosition[] positions;
   ChassisSpeeds speeds;
-  Field2d m_field;
   GyroIO gyroIO;
 
   SwerveModule frontLeft;
@@ -41,13 +39,15 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain_Swerve. */
   public Drivetrain() {
     kinematics = new SwerveDriveKinematics(drivetrainConstants.moduleFLPos,drivetrainConstants.moduleFRPos,drivetrainConstants.moduleRLPos,drivetrainConstants.moduleRRPos);
+
     frontLeft = new SwerveModule(0, RobotIDs.DriveFLeft, RobotIDs.SteerFLeft);
     frontRight = new SwerveModule(0, RobotIDs.DriveFRight, RobotIDs.SteerFRight);
     rearLeft = new SwerveModule(0, RobotIDs.DriveRLeft, RobotIDs.SteerRLeft);
     rearRight = new SwerveModule(0, RobotIDs.DriveRRight, RobotIDs.SteerRRight);
+
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
-    m_field = new Field2d();
     odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), positions);
+
     switch (robotConstants.currentMode) {
       case SIM:
         gyroIO = new GyroIOSim(RobotIDs.GyroID);
@@ -62,27 +62,36 @@ public class Drivetrain extends SubsystemBase {
     double turnAngle = Joystick2X*drivetrainConstants.speedRadians;
     double moveSpeedLateral = Joystick1Y*drivetrainConstants.robotSpeedRPS;
     double moveSpeedHorizontal = Joystick1X*drivetrainConstants.robotSpeedRPS;
+
     Logger.recordOutput("Joystick1Y", Joystick1Y);
     Logger.recordOutput("Joystick1X", Joystick1X);
     Logger.recordOutput("Joystick2X", Joystick2X);
     Logger.recordOutput("Move Speed Lateral", moveSpeedLateral);
     Logger.recordOutput("Move Speed Horizontal", moveSpeedHorizontal);
     Logger.recordOutput("Turn Speed", turnAngle);
+
     ChassisSpeeds newSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(moveSpeedLateral,moveSpeedHorizontal,turnAngle, gyroIO.getGryoAngle());
     SwerveModuleState[] setModuleStates = kinematics.toSwerveModuleStates(newSpeeds);
+
     Logger.recordOutput("Swerve State Speed", setModuleStates[0].speedMetersPerSecond);
     Logger.recordOutput("Swerve Turn", setModuleStates[0].angle.getRotations());
+
     setModuleStates[0] = SwerveModuleState.optimize(setModuleStates[0], frontLeft.getRotation());
     setModuleStates[1] = SwerveModuleState.optimize(setModuleStates[1], frontRight.getRotation());
     setModuleStates[2] = SwerveModuleState.optimize(setModuleStates[2], rearLeft.getRotation());
     setModuleStates[3] = SwerveModuleState.optimize(setModuleStates[3], rearRight.getRotation());
+
     Logger.recordOutput("Intended States", setModuleStates);
+
     frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
     frontLeft.setSteerAngle(setModuleStates[0].angle.getRotations());
+
     frontRight.setDriveSpeed(setModuleStates[1].speedMetersPerSecond);
     frontRight.setSteerAngle(setModuleStates[1].angle.getRotations());
+
     rearLeft.setDriveSpeed(setModuleStates[2].speedMetersPerSecond);
     rearLeft.setSteerAngle(setModuleStates[2].angle.getRotations());
+
     rearRight.setDriveSpeed(setModuleStates[3].speedMetersPerSecond);
     rearRight.setSteerAngle(setModuleStates[3].angle.getRotations());
   }
@@ -95,10 +104,11 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
+    
     odometry.update(new Rotation2d(), positions);
+
     Logger.recordOutput("Odometry", odometry.getPoseMeters());
-    SmartDashboard.putData("Field", m_field);
-    m_field.setRobotPose(odometry.getPoseMeters());
+
     SwerveModuleState frontLeftState = frontLeft.getCurrentState();
     SwerveModuleState frontRightState = frontRight.getCurrentState();
     SwerveModuleState rearLeftState = rearLeft.getCurrentState();
