@@ -50,16 +50,20 @@ public class Drivetrain extends SubsystemBase {
       case SIM:
         gyroIO = new GyroIOSim(RobotIDs.GyroID);
         break;
-      default:
+      case REAL:
+        gyroIO = new GyroIOSim(RobotIDs.GyroID);
+        break;
+      case REPLAY:
         gyroIO = new GyroIOSim(RobotIDs.GyroID);
         break;
     }
   }
 
   public void driveSwerve(double Joystick1Y, double Joystick1X, double Joystick2X) {
-    double turnAngle = Joystick2X*drivetrainConstants.speedRadians;
+    double turnAngle = Joystick2X*drivetrainConstants.maxturnRadians;
     double moveSpeedLateral = Joystick1Y*drivetrainConstants.robotSpeedRPS;
     double moveSpeedHorizontal = Joystick1X*drivetrainConstants.robotSpeedRPS;
+    gyroIO.setRotation(turnAngle);
 
     Logger.recordOutput("Joystick1Y", Joystick1Y);
     Logger.recordOutput("Joystick1X", Joystick1X);
@@ -103,7 +107,7 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
     
-    odometry.update(new Rotation2d(), positions);
+    odometry.update(gyroIO.getGryoAngle(), positions);
 
     Logger.recordOutput("Odometry", odometry.getPoseMeters());
 

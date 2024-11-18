@@ -31,10 +31,10 @@ public class Constants {
         // Steer PID Constants
         public static final double kPSteer = 3.5;
         public static final double kISteer = 1;
-        public static final double KDSteer = 1;
+        public static final double kDSteer = 1;
 
         // Drive Train Constants
-        public static final double speedRadians = 2.0*Math.PI;
+        public static final double maxturnRadians = 2.0*Math.PI;
         public static final double robotSpeedRPS = 12;
         public static final double driveRatio = 12.8;
         public static final double driveMOI = 0.127;

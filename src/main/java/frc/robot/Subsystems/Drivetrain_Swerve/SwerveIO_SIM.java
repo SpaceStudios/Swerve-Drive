@@ -25,7 +25,7 @@ public class SwerveIO_SIM implements SwerveIO {
         DriveMotor = new DCMotorSim(DCMotor.getNEO(1), drivetrainConstants.driveRatio, drivetrainConstants.driveMOI);
         SteerMotor = new DCMotorSim(DCMotor.getNEO(1), drivetrainConstants.steerRatio, drivetrainConstants.steerMOI);
 
-        steerPID = new PIDController(drivetrainConstants.kPSteer, drivetrainConstants.kISteer, drivetrainConstants.KDSteer, 0.020);
+        steerPID = new PIDController(drivetrainConstants.kPSteer, drivetrainConstants.kISteer, drivetrainConstants.kDSteer, 0.020);
         drivePID = new PIDController(drivetrainConstants.kPDrive, drivetrainConstants.kIDrive, drivetrainConstants.kDDrive, 0.020);
     }
 

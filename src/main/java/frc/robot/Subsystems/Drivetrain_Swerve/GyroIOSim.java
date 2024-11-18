@@ -5,14 +5,11 @@
 package frc.robot.Subsystems.Drivetrain_Swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 
 /** Add your docs here. */
 public class GyroIOSim implements GyroIO{
-    AnalogGyroSim gyroSim;
 
     public GyroIOSim(int GyroID) {
-        gyroSim = new AnalogGyroSim(GyroID);
     }
 
     @Override
