@@ -51,8 +51,11 @@ public class Constants {
     public class climberConstants {
         public static final double climbRatio = 12.8;
         public static final double climbMOI = 0.004;
-
-        public static final double WheelSize = 0.2;
+        public static final double climbP = 3.5;
+        public static final double climbI = 1;
+        public static final double climbD = 1;
+        public static final double WheelRadius = 0.2;
+        public static final double maxClimbHeight = 0.4;
     }
 
     public class pivotConstants {

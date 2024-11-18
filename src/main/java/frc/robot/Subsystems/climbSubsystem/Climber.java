@@ -11,13 +11,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   climbIO ClimbIO;
+  double setClimbPosition;
   public Climber() {
     ClimbIO = new climbIO_SIM(1);
+    setClimbPosition = 0;
+  }
+
+  public void setClimbPositionMeters(double newPosition) {
+    setClimbPosition = newPosition;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Logger.recordOutput("ClimbPosition", ClimbIO.getClimbPosition());
+    Logger.recordOutput("ClimbPosition", ClimbIO.getClimbPositionMeters());
+    ClimbIO.setClimbPosition(setClimbPosition);
   }
 }

@@ -7,5 +7,6 @@ package frc.robot.Subsystems.climbSubsystem;
 /** Add your docs here. */
 public interface climbIO {
     public abstract void setClimbVolts(double volts);
-    public abstract double getClimbPosition();
+    public abstract double getClimbPositionMeters();
+    public abstract void setClimbPosition(double position);
 }
