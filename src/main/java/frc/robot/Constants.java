@@ -20,6 +20,7 @@ public class Constants {
         public static final int DriveRRight = 7;
         public static final int SteerRRight = 8;
         public static final int GyroID = 9;
+        public static final int ShooterID = 21;
     }
 
     public class drivetrainConstants {
@@ -55,7 +56,7 @@ public class Constants {
         public static final double climbI = 0;
         public static final double climbD = 0;
         public static final double WheelRadius = 0.2;
-        public static final double maxClimbHeight = 1000;
+        public static final double maxClimbHeight = 1;
     }
 
     public class pivotConstants {
@@ -68,9 +69,9 @@ public class Constants {
     public class robotConstants {
         public static final double MotorVoltage = 12;
 
-        public static final Mode currentMode = Mode.SIM;
+        public static robotMode currentMode = robotMode.SIM;
 
-        public static enum Mode {
+        public static enum robotMode {
             REAL,
             SIM,
             REPLAY

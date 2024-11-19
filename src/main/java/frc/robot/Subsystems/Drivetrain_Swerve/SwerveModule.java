@@ -29,7 +29,7 @@ public class SwerveModule {
                 io = new SwerveIO_SIM(DriveID, SteerID);
                 break;
             case REAL:
-                io = new SwerveIO_Forte(DriveID, SteerID);
+                io = new SwerveIO_Sparkmax(DriveID, SteerID);
                 break;
             case REPLAY:
                 io = new SwerveIO_SIM(DriveID, SteerID);

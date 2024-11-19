@@ -7,12 +7,24 @@ package frc.robot.Subsystems.Shooter;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.RobotIDs;
+import frc.robot.Constants.robotConstants;
 
 public class shooterSubsystem extends SubsystemBase {
   /** Creates a new shooterSubsystem. */
   shooterIO io;
   public shooterSubsystem() {
-    io = new shooterIO_SIM(1,1);
+    switch (robotConstants.currentMode) {
+      case REAL:
+        io = new shooterIO_SIM(RobotIDs.ShooterID, 1);
+        break;
+      case SIM:
+        io = new shooterIO_SIM(1, 1);
+        break;
+      case REPLAY:
+        io = new shooterIO_SIM(1, 1);
+        break;
+    }
   }
 
   public void setShooterVolts(double volts) {

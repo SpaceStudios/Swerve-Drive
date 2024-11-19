@@ -11,6 +11,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.wpilibj.RuntimeType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.robotConstants;
@@ -30,6 +31,12 @@ public class Robot extends LoggedRobot {
       System.out.println("");
       System.out.println("Activation Sucessful");
       System.out.println("Good Luck!");
+
+      if (getRuntimeType() == RuntimeType.kSimulation) {
+        robotConstants.currentMode = robotConstants.robotMode.SIM;
+      } else {
+        robotConstants.currentMode = robotConstants.robotMode.REAL;
+      }
       switch (robotConstants.currentMode) {
         case REAL:
          Logger.addDataReceiver(new WPILOGWriter("/media/sda1/")); 
