@@ -13,6 +13,8 @@ import frc.robot.Subsystems.Pivot.Commands.PivotChange;
 import frc.robot.Subsystems.Shooter.shooterSubsystem;
 import frc.robot.Subsystems.Shooter.Commands.runLauncher;
 import frc.robot.Subsystems.Shooter.Commands.runShooter;
+import frc.robot.Subsystems.climbSubsystem.climbSubsystem;
+import frc.robot.Subsystems.climbSubsystem.Commands.deployClimbArm;
 
 public class RobotContainer {
   public RobotContainer() {
@@ -29,6 +31,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new runLauncher(mainShooter, 1));
     controller.b().whileTrue(new runShooter(mainShooter, 1));
     controller.a().whileTrue(new runLauncher(mainShooter, -1)).whileTrue(new runShooter(mainShooter, -1));
+    controller.leftTrigger().onTrue(new deployClimbArm(mainClimbSubsystem));
   }
 
   public Command getAutonomousCommand() {
@@ -39,6 +42,7 @@ public class RobotContainer {
   Drivetrain mainDrive = new Drivetrain();
   Pivot mainPivot = new Pivot();
   shooterSubsystem mainShooter = new shooterSubsystem();
+  climbSubsystem mainClimbSubsystem = new climbSubsystem();
 
   private double modifyJoystick(double in) {
     if (Math.abs(in) < 0.1) {

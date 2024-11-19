@@ -1,6 +1,7 @@
 {
   "NTProvider": {
     "types": {
+      "/AdvantageKit/RealOutputs/Climb Mechanism": "Mechanism2d",
       "/AdvantageKit/RealOutputs/Pivot Mechanism": "Mechanism2d",
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Field": "Field2d"

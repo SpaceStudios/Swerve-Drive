@@ -8,11 +8,11 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Climber extends SubsystemBase {
+public class climbSubsystem extends SubsystemBase {
   /** Creates a new Climber. */
   climbIO ClimbIO;
   double setClimbPosition;
-  public Climber() {
+  public climbSubsystem() {
     ClimbIO = new climbIO_SIM(1);
     setClimbPosition = 0;
   }

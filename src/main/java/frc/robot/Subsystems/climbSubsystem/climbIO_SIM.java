@@ -4,7 +4,10 @@
 
 package frc.robot.Subsystems.climbSubsystem;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
@@ -22,7 +25,7 @@ public class climbIO_SIM implements climbIO {
 
     public climbIO_SIM(int climbMotorID) {
         ClimbMotor = new DCMotorSim(DCMotor.getNEO(1), climberConstants.climbRatio, climberConstants.climbMOI);
-        climbPid.setPID(climberConstants.climbP, climberConstants.climbI, climberConstants.climbD);
+        climbPid = new PIDController(climberConstants.climbP, climberConstants.climbI, climberConstants.climbD);
         climbMechanism = new Mechanism2d(1, 1);
         climbRoot = climbMechanism.getRoot("ClimbRoot", 0.5, 0);
         climbArm = climbRoot.append(new MechanismLigament2d("Climb Arm", 0, Math.PI/2));
@@ -40,7 +43,10 @@ public class climbIO_SIM implements climbIO {
 
     @Override
     public void setClimbPosition(double position) {
+        ClimbMotor.update(0.020);
         ClimbMotor.setInputVoltage(climbPid.calculate(ClimbMotor.getAngularPositionRad(),position/climberConstants.WheelRadius));
         climbArm.setLength(ClimbMotor.getAngularPositionRad()*climberConstants.WheelRadius);
+        climbArm.setAngle(Rotation2d.fromRadians(Math.PI/2));
+        Logger.recordOutput("Climb Mechanism", climbMechanism);
     }
 }
