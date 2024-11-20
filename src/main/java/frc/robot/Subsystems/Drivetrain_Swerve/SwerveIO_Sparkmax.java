@@ -28,6 +28,9 @@ public class SwerveIO_Sparkmax implements SwerveIO {
     public SwerveIO_Sparkmax(int DriveID, int SteerID) {
         DriveMotor = new CANSparkMax(DriveID, MotorType.kBrushless);
         SteerMotor = new CANSparkMax(SteerID, MotorType.kBrushless);
+
+        DriveMotor.setIdleMode(IdleMode.kCoast);
+        SteerMotor.setIdleMode(IdleMode.kCoast);
         
         driveEncoder = DriveMotor.getEncoder();
         steerEncoder = SteerMotor.getEncoder();
@@ -57,7 +60,7 @@ public class SwerveIO_Sparkmax implements SwerveIO {
 
     @Override
     public void setDriveSpeed(double rps) {
-        drivePID.setReference(rps*60, ControlType.kVelocity);
+        drivePID.setReference(rps, ControlType.kVelocity);
     }
 
     @Override
