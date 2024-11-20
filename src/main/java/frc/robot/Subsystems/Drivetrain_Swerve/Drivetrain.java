@@ -8,6 +8,7 @@ import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -23,6 +24,7 @@ import frc.robot.Constants.robotConstants;
 
 public class Drivetrain extends SubsystemBase {
 
+  double angle;
   SwerveDriveOdometry odometry;
   SwerveDriveKinematics kinematics;
   SwerveModulePosition[] positions;
@@ -60,23 +62,34 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void driveSwerve(double Joystick1Y, double Joystick1X, double Joystick2X) {
-    double turnAngle = Joystick2X*drivetrainConstants.maxturnRadians;
-    double moveSpeedLateral = Joystick1Y*drivetrainConstants.robotSpeedRPS;
-    double moveSpeedHorizontal = Joystick1X*drivetrainConstants.robotSpeedRPS;
-    gyroIO.setRotation(turnAngle);
-
     Logger.recordOutput("Joystick1Y", Joystick1Y);
     Logger.recordOutput("Joystick1X", Joystick1X);
     Logger.recordOutput("Joystick2X", Joystick2X);
-    Logger.recordOutput("Move Speed Lateral", moveSpeedLateral);
-    Logger.recordOutput("Move Speed Horizontal", moveSpeedHorizontal);
-    Logger.recordOutput("Turn Speed", turnAngle);
 
-    ChassisSpeeds newSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(moveSpeedLateral,moveSpeedHorizontal,turnAngle, gyroIO.getGryoAngle());
+    Joystick1X = MathUtil.applyDeadband(-Joystick1X, drivetrainConstants.deadband);
+    if (Joystick1X > 0) Joystick1X -= drivetrainConstants.deadband;
+    if (Joystick1X < 0) Joystick1X += drivetrainConstants.deadband;
+    Joystick1X *= drivetrainConstants.maxRobotSpeedMPS;
+
+    Joystick1Y = MathUtil.applyDeadband(-Joystick1Y, drivetrainConstants.deadband);
+    if (Joystick1Y > 0) Joystick1Y -= drivetrainConstants.deadband;
+    if (Joystick1Y < 0) Joystick1Y += drivetrainConstants.deadband;
+    Joystick1Y *= drivetrainConstants.maxRobotSpeedMPS;
+
+    Joystick2X = MathUtil.applyDeadband(-Joystick2X, drivetrainConstants.deadband);
+    if (Joystick2X > 0) Joystick2X -= drivetrainConstants.deadband;
+    if (Joystick2X < 0) Joystick2X += drivetrainConstants.deadband;
+    Joystick2X *= drivetrainConstants.maxturnSpeedRadps;
+    
+    Logger.recordOutput("Move Speed Lateral", Joystick1Y);
+    Logger.recordOutput("Move Speed Horizontal", Joystick2X);
+    Logger.recordOutput("Turn Speed", Joystick2X);
+
+    ChassisSpeeds newSpeeds = new ChassisSpeeds(Joystick1X, Joystick1Y, Joystick2X);
     SwerveModuleState[] setModuleStates = kinematics.toSwerveModuleStates(newSpeeds);
 
     Logger.recordOutput("Swerve State Speed", setModuleStates[0].speedMetersPerSecond);
-    Logger.recordOutput("Swerve Turn", setModuleStates[0].angle.getRotations());
+    Logger.recordOutput("Swerve Turn", setModuleStates[0].angle);
 
     setModuleStates[0] = SwerveModuleState.optimize(setModuleStates[0], frontLeft.getRotation());
     setModuleStates[1] = SwerveModuleState.optimize(setModuleStates[1], frontRight.getRotation());
@@ -85,21 +98,26 @@ public class Drivetrain extends SubsystemBase {
 
     Logger.recordOutput("Intended States", setModuleStates);
 
-    frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
-    frontLeft.setSteerAngle(setModuleStates[0].angle.getRotations());
+    // frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
+    // frontLeft.setSteerAngle(setModuleStates[0].angle);
 
-    frontRight.setDriveSpeed(setModuleStates[1].speedMetersPerSecond);
-    frontRight.setSteerAngle(setModuleStates[1].angle.getRotations());
+    // frontRight.setDriveSpeed(setModuleStates[1].speedMetersPerSecond);
+    frontRight.setSteerAngle(setModuleStates[1].angle);
 
-    rearLeft.setDriveSpeed(setModuleStates[2].speedMetersPerSecond);
-    rearLeft.setSteerAngle(setModuleStates[2].angle.getRotations());
+    // rearLeft.setDriveSpeed(setModuleStates[2].speedMetersPerSecond);
+    // rearLeft.setSteerAngle(setModuleStates[2].angle);
 
-    rearRight.setDriveSpeed(setModuleStates[3].speedMetersPerSecond);
-    rearRight.setSteerAngle(setModuleStates[3].angle.getRotations());
+    // rearRight.setDriveSpeed(setModuleStates[3].speedMetersPerSecond);
+    // rearRight.setSteerAngle(setModuleStates[3].angle);
   }
 
   public Command driveCommand(DoubleSupplier Joystick1Vertical, DoubleSupplier Joystick1Horizontal, DoubleSupplier Joystick2Horizontal) {
-    return new RunCommand(() -> this.driveSwerve(Joystick1Vertical.getAsDouble(), Joystick1Horizontal.getAsDouble(),Joystick2Horizontal.getAsDouble()),this);
+    return new RunCommand(() -> {
+      angle += Joystick1Horizontal.getAsDouble() / 10.0;
+      // frontRight.setSteerAngle(new Rotation2d(angle));
+
+      this.driveSwerve(Joystick1Vertical.getAsDouble(), Joystick1Horizontal.getAsDouble(),Joystick2Horizontal.getAsDouble());
+    },this);
   }
 
   @Override
