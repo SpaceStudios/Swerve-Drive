@@ -49,12 +49,12 @@ public class SwerveModule {
         io.setDriveVolts(volts);
     }
 
-    public void setSteerAngle(Rotation2d angleRad) {
-        Logger.recordOutput("Steer Input"+SetSteerID, angleRad);
-        if (angleRad == -Math.PI || angleRad == Math.PI) {
-            angleRad = Math.PI;
+    public void setSteerAngle(Rotation2d angle) {
+        Logger.recordOutput("Steer Input"+SetSteerID, angle.getRadians());
+        if (angle.getRadians() == -Math.PI || angle.getRadians() == Math.PI) {
+            angle = Rotation2d.fromRadians(Math.PI);
         }
-        io.setSteerAngle(angleRad);
+        io.setSteerAngle(angle);
     }
 
     public void setDriveSpeed(double rps) {
