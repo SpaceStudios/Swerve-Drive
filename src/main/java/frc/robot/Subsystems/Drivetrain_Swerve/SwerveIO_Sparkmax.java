@@ -65,7 +65,7 @@ public class SwerveIO_Sparkmax implements SwerveIO {
 
     @Override
     public void setSteerAngle(Rotation2d angle) {
-        steerPID.setReference(angle.getRadians(), ControlType.kPosition);
+        steerPID.setReference(angle.getRotations(), ControlType.kPosition);
     }
 
     @Override
