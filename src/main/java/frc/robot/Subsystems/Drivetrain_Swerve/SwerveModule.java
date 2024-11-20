@@ -51,6 +51,9 @@ public class SwerveModule {
 
     public void setSteerAngle(double angleRad) {
         Logger.recordOutput("Steer Input"+SetSteerID, angleRad);
+        if (angleRad == -Math.PI || angleRad == Math.PI) {
+            angleRad = Math.PI;
+        }
         io.setSteerAngle(angleRad);
     }
 
