@@ -49,7 +49,7 @@ public class SwerveModule {
         io.setDriveVolts(volts);
     }
 
-    public void setSteerAngle(double angleRad) {
+    public void setSteerAngle(Rotation2d angleRad) {
         Logger.recordOutput("Steer Input"+SetSteerID, angleRad);
         io.setSteerAngle(angleRad);
     }

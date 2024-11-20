@@ -17,6 +17,12 @@ import frc.robot.Subsystems.climbSubsystem.climbSubsystem;
 import frc.robot.Subsystems.climbSubsystem.Commands.deployClimbArm;
 
 public class RobotContainer {
+  CommandXboxController controller = new CommandXboxController(0);
+  Drivetrain mainDrive = new Drivetrain();
+  Pivot mainPivot = new Pivot();
+  shooterSubsystem mainShooter = new shooterSubsystem();
+  climbSubsystem mainClimbSubsystem = new climbSubsystem();
+
   public RobotContainer() {
     configureBindings();
   }
@@ -24,7 +30,7 @@ public class RobotContainer {
   private void configureBindings() {
     mainDrive.setDefaultCommand(
       mainDrive.driveCommand(
-        () -> -modifyJoystick(controller.getLeftY()), () -> -modifyJoystick(controller.getLeftX()), () -> modifyJoystick(controller.getRightX()))
+        () -> controller.getLeftY(), () -> controller.getLeftX(), () -> controller.getRightX())
     );
     controller.y().onTrue(new PivotChange(mainPivot, 1));
     controller.x().onTrue(new PivotChange(mainPivot, -1));
@@ -36,18 +42,5 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
-  }
-
-  CommandXboxController controller = new CommandXboxController(0);
-  Drivetrain mainDrive = new Drivetrain();
-  Pivot mainPivot = new Pivot();
-  shooterSubsystem mainShooter = new shooterSubsystem();
-  climbSubsystem mainClimbSubsystem = new climbSubsystem();
-
-  private double modifyJoystick(double in) {
-    if (Math.abs(in) < 0.1) {
-      return 0;
-    }
-    return in * in * Math.signum(in);
   }
 }

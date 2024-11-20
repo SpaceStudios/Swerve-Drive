@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 
 /** Add your docs here. */
 public class Constants {
@@ -24,29 +25,45 @@ public class Constants {
     }
 
     public class drivetrainConstants {
+        public static final double deadband = 0.1;
+
         // Drive Train PID Constants
-        public static final double kPDrive = 2;
+        public static final double kPDrive = 0.01;
         public static final double kIDrive = 0;
-        public static final double kDDrive = 0;
+        public static final double kDDrive = 0.2;
 
         // Steer PID Constants
-        public static final double kPSteer = 3.5;
-        public static final double kISteer = 1;
-        public static final double kDSteer = 1;
+        public static final double kPSteer = 0.4;
+        public static final double kISteer = 0;
+        public static final double kDSteer = 0;
 
         // Drive Train Constants
-        public static final double maxturnRadians = 2.0*Math.PI;
-        public static final double robotSpeedRPS = 12;
-        public static final double driveRatio = 12.8;
+        public static final double maxturnSpeedRadps = Math.PI;
+        public static final double maxRobotSpeedMPS = 1;
+        public static final double driveRatio = 150.0/7.0;
         public static final double driveMOI = 0.127;
-        public static final double steerRatio = 12.8;
+        public static final double steerRatio = 150.0/7.0;
         public static final double steerMOI = 0.127;
 
+        
+        public static final double robotWidth = Units.inchesToMeters(10); // Meters
+        public static final double robotLength = Units.inchesToMeters(10); // Meters
+        public static final double wheelDiameter = Units.inchesToMeters(4); // Meters
+
+        public static final double driveGearRatio = 5.36;
+        public static final double turnGearRatio = 150.0 / 7.0;
+
+        public static final double drivePositionConversionFactor = wheelDiameter * Math.PI / driveGearRatio;
+        public static final double driveVelocityConversionFactor = drivePositionConversionFactor / 60;
+
+        public static final double turnPositionConversionFactor = 2 * Math.PI / turnGearRatio;
+        public static final double turnVelocityConversionFactor = turnPositionConversionFactor / 60;
+
         //Swerve Module Translations
-        public static final Translation2d moduleFLPos = new Translation2d(0.1,0.1);
-        public static final Translation2d moduleFRPos = new Translation2d(0.1,0.1);
-        public static final Translation2d moduleRLPos = new Translation2d(0.1,0.1);
-        public static final Translation2d moduleRRPos = new Translation2d(0.1,0.1);
+        public static final Translation2d moduleFLPos = new Translation2d(-robotWidth / 2.0,  robotLength / 2.0);
+        public static final Translation2d moduleFRPos = new Translation2d( robotWidth / 2.0,  robotLength / 2.0);
+        public static final Translation2d moduleRLPos = new Translation2d(-robotWidth / 2.0, -robotLength / 2.0);
+        public static final Translation2d moduleRRPos = new Translation2d( robotWidth / 2.0, -robotLength / 2.0);
     }
     
     public class climberConstants {
