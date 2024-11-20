@@ -46,9 +46,9 @@ public class SwerveIO_SIM implements SwerveIO {
     }
 
     @Override
-    public void setSteerAngle(double angle) {
+    public void setSteerAngle(Rotation2d angle) {
         Logger.recordOutput("Input Angle", angle);
-        SteerMotor.setInputVoltage(MathUtil.clamp(steerPID.calculate(SteerMotor.getAngularPositionRad(), angle), -12, 12));
+        SteerMotor.setInputVoltage(MathUtil.clamp(steerPID.calculate(SteerMotor.getAngularPositionRad(), angle.getRadians()), -12, 12));
     }
 
     @Override

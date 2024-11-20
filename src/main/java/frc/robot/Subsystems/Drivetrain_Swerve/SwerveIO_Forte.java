@@ -40,6 +40,7 @@ public class SwerveIO_Forte implements SwerveIO{
         steerMotor.setIdleMode(IdleMode.kBrake);
 
         steerEncoder = steerMotor.getEncoder();
+        steerEncoder.setPositionConversionFactor(drivetrainConstants.turnPositionConversionFactor);
 
         REVLibError SteerMotorSucess = REVLibError.kUnknown;
         while (SteerMotorSucess != REVLibError.kOk) {
@@ -58,8 +59,8 @@ public class SwerveIO_Forte implements SwerveIO{
     }
 
     @Override
-    public void setSteerAngle(double angle) {
-        steerPID.setReference(angle*(Math.PI*2), ControlType.kPosition);
+    public void setSteerAngle(Rotation2d angle) {
+        steerPID.setReference(angle.getRadians(), ControlType.kPosition);
     }
 
     @Override

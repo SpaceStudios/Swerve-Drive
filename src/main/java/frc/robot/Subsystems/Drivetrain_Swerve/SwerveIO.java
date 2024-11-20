@@ -19,7 +19,7 @@ public interface SwerveIO {
     }
     public abstract void setDriveVolts(double volts);
     public abstract void setDriveSpeed(double rps);
-    public abstract void setSteerAngle(double angle);
+    public abstract void setSteerAngle(Rotation2d angle);
     public abstract double getDistance();
     public abstract Rotation2d getRotation();
     public abstract void getData(SwerveData data);

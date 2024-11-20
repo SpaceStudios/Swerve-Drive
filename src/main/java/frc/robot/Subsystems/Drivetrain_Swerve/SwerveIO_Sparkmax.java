@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -30,6 +31,12 @@ public class SwerveIO_Sparkmax implements SwerveIO {
         
         driveEncoder = DriveMotor.getEncoder();
         steerEncoder = SteerMotor.getEncoder();
+
+        driveEncoder.setPositionConversionFactor(drivetrainConstants.drivePositionConversionFactor);
+        driveEncoder.setVelocityConversionFactor(drivetrainConstants.driveVelocityConversionFactor);
+
+        steerEncoder.setPositionConversionFactor(drivetrainConstants.turnPositionConversionFactor);
+        steerEncoder.setVelocityConversionFactor(drivetrainConstants.turnVelocityConversionFactor);
 
         drivePID = DriveMotor.getPIDController();
         steerPID = SteerMotor.getPIDController();
@@ -54,8 +61,8 @@ public class SwerveIO_Sparkmax implements SwerveIO {
     }
 
     @Override
-    public void setSteerAngle(double angle) {
-        steerPID.setReference(angle/(Math.PI*2), ControlType.kPosition);
+    public void setSteerAngle(Rotation2d angle) {
+        steerPID.setReference(angle.getRadians(), ControlType.kPosition);
     }
 
     @Override
