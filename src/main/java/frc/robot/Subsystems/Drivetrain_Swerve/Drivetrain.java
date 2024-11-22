@@ -98,17 +98,17 @@ public class Drivetrain extends SubsystemBase {
 
     Logger.recordOutput("Intended States", setModuleStates);
 
-    // frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
-    // frontLeft.setSteerAngle(setModuleStates[0].angle);
+    frontLeft.setDriveSpeed(setModuleStates[0].speedMetersPerSecond);
+    frontLeft.setSteerAngle(setModuleStates[0].angle);
 
-    // frontRight.setDriveSpeed(setModuleStates[1].speedMetersPerSecond);
+    frontRight.setDriveSpeed(setModuleStates[1].speedMetersPerSecond);
     frontRight.setSteerAngle(setModuleStates[1].angle);
 
-    // rearLeft.setDriveSpeed(setModuleStates[2].speedMetersPerSecond);
-    // rearLeft.setSteerAngle(setModuleStates[2].angle);
+    rearLeft.setDriveSpeed(setModuleStates[2].speedMetersPerSecond);
+    rearLeft.setSteerAngle(setModuleStates[2].angle);
 
-    // rearRight.setDriveSpeed(setModuleStates[3].speedMetersPerSecond);
-    // rearRight.setSteerAngle(setModuleStates[3].angle);
+    rearRight.setDriveSpeed(setModuleStates[3].speedMetersPerSecond);
+    rearRight.setSteerAngle(setModuleStates[3].angle);
   }
 
   public Command driveCommand(DoubleSupplier Joystick1Vertical, DoubleSupplier Joystick1Horizontal, DoubleSupplier Joystick2Horizontal) {
@@ -125,7 +125,7 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     positions = new SwerveModulePosition[] {frontLeft.getPosition(), frontRight.getPosition(), rearLeft.getPosition(), rearRight.getPosition()};
     
-    odometry.update(gyroIO.getGryoAngle(), positions);
+    odometry.update(new Rotation2d(), positions);
 
     Logger.recordOutput("Odometry", odometry.getPoseMeters());
 
